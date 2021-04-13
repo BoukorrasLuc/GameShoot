@@ -233,7 +233,6 @@ function movementPlayer() {
 function draw() {
   // Clean erases the pixels
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   movementPlayer();
 
   game.bullets.forEach((bull, index) => {
@@ -243,6 +242,7 @@ function draw() {
     if (bull.x < 0 && bull.x > canvas.width) {
       game.bullets.splice(index, 1);
     }
+
     // Detection bullet update score
     players.forEach((player, i) => {
       if (colDec(bull, player)) {
