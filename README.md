@@ -1,6 +1,6 @@
 # Game Shoot
 
-- Mini shoot Game.
+- Mini shoot Game, one or two players.
 
 ## About this project
 
@@ -17,6 +17,8 @@ player blue:
 
 - direction key : q, d, s, z. (keyboard azerty)
 - shoot : space.
+
+### Ia
 
 - Active Ia (player blue) = press "Turn On"
 
