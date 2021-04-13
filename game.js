@@ -1,7 +1,7 @@
+// Creation of the play area
 const grid = 50;
 const mind = { thinking: false, dirY: 5, dirX: 1, count: 0 };
 
-// Game Object
 const canvas = document.createElement("canvas");
 canvas.setAttribute("width", grid * 20);
 canvas.setAttribute("height", grid * 15);
@@ -9,7 +9,7 @@ document.body.prepend(canvas);
 canvas.style.border = "1px solid black";
 const ctx = canvas.getContext("2d");
 
-// Button Game
+// Creation of the button activating the AI
 const btn = document.createElement("button");
 btn.style.display = "block";
 btn.textContent = "Turn On";
@@ -18,6 +18,7 @@ btn.style.backgroundColor = "red";
 btn.style.color = "white";
 btn.style.padding = "20px";
 
+// switch to ai
 btn.addEventListener("click", (e) => {
   if (!mind.thinking) {
     mind.thinking = true;
@@ -30,7 +31,7 @@ btn.addEventListener("click", (e) => {
   }
 });
 
-// values players
+//information on the position and color of the players
 const players = [
   {
     color: "red",
@@ -61,6 +62,7 @@ canvas.addEventListener("click", startGame);
 
 function startGame() {
   cancelAnimationFrame(game.req);
+
   //Reset position players
   players.forEach((player, inde) => {
     player.score = 0;
@@ -80,10 +82,10 @@ function startGame() {
   game.req = requestAnimationFrame(draw);
 }
 
+// The keydown event lets me know which keys are used
 document.addEventListener("keydown", (e) => {
   if (e.code in keyz) {
     keyz[e.code] = true;
-    // console.log(keyz);
   }
 
   // Player 1 shooting
@@ -111,6 +113,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// The keyup event lets me know which keys are used
 document.addEventListener("keyup", (e) => {
   if (e.code in keyz) {
     keyz[e.code] = false;
@@ -128,10 +131,9 @@ function colDec(a, b) {
 }
 
 function movementPlayer() {
-  //
   if (mind.thinking) {
+    // logic shoot ia
     let shootTime = Math.floor(Math.random() * 5);
-
     if (shootTime == 1 && players[1].cooldown <= 0) {
       players[1].cooldown = Math.floor(Math.random() * 20) + 9;
       game.bullets.push({
@@ -169,7 +171,6 @@ function movementPlayer() {
       //incoming bullet check
       game.bullets.forEach((bull, index) => {
         if (bull.speed < 0) {
-          // console.log("incoming " + bull.y);
           mind.count = 50;
           if (bull.y <= players[1].y) {
             mind.dirY = -valY;
@@ -179,7 +180,7 @@ function movementPlayer() {
         }
       });
     }
-    //
+    //AI movement according to the movement of the other player
     if (
       !(
         players[1].y > players[1].size / 2 &&
@@ -197,13 +198,9 @@ function movementPlayer() {
     ) {
       mind.dirX *= -1;
     }
+
     players[1].y += mind.dirY;
     players[1].x += mind.dirX;
-    /*    if(players[1].y + val< players[0].y){
-          players[1].y += players[1].speed;
-        }else if(players[1].y + val > players[0].y){
-          players[1].y -= players[1].speed;
-        }*/
   }
 
   // Interaction keyboard
@@ -234,8 +231,11 @@ function movementPlayer() {
 }
 
 function draw() {
+  // Clean erases the pixels
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   movementPlayer();
+
   game.bullets.forEach((bull, index) => {
     ctx.fillStyle = bull.color;
     ctx.fillRect(bull.x + bull.size / 2, bull.y, bull.size, bull.size);
@@ -243,9 +243,9 @@ function draw() {
     if (bull.x < 0 && bull.x > canvas.width) {
       game.bullets.splice(index, 1);
     }
+    // Detection bullet update score
     players.forEach((player, i) => {
       if (colDec(bull, player)) {
-        // console.log("HIT Player " + player.color + " " + i);
         if (i == 0) {
           players[1].score++;
         } else {
@@ -255,18 +255,24 @@ function draw() {
       }
     });
   });
+
+  // line middle area
   ctx.beginPath();
   ctx.moveTo(canvas.width / 2, 0);
   ctx.lineTo(canvas.width / 2, canvas.height);
   ctx.stroke();
+
   players.forEach((player) => {
     if (player.cooldown > 0) {
       player.cooldown--;
     }
+    //Score values
     ctx.fillStyle = player.color;
     ctx.font = grid + "px serif";
     ctx.textAlign = "center";
     ctx.fillText("Score:" + player.score, player.pos, grid);
+
+    // draw players
     ctx.beginPath();
     ctx.arc(player.x, player.y, player.size, 0, Math.PI * 2);
     ctx.fill();
