@@ -8,6 +8,8 @@
 
 ### Gameplay
 
+launch the game : click mouse!
+
 player red:
 
 - direction key : up arrow, down arrow, left arrow, right arrow.
@@ -21,6 +23,10 @@ player blue:
 ### Ia
 
 - Active Ia (player blue) = press "Turn On"
+
+## Game
+
+[launch the game](https://luc-shootgame.netlify.app/).
 
 ## Screenshots
 
