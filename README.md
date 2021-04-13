@@ -18,4 +18,8 @@ player blue:
 - direction key : q, d, s, z. (keyboard azerty)
 - shoot : space.
 
-- Active Ia = press "Turn On"
+- Active Ia (player blue) = press "Turn On"
+
+## Screenshots
+
+![Screenshot GIF](./Preview/Game.gif)
