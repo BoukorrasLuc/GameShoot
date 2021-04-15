@@ -26,7 +26,7 @@ player blue:
 
 ## Game
 
-[launch the game](https://luc-shootgame.netlify.app/).
+[launch the game](https://shootgame-luc.netlify.app/).
 
 ## Screenshots
 
